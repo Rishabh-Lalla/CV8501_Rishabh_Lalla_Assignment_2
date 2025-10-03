@@ -101,7 +101,7 @@ python analyze_checkpoints.py   --data-root /l/users/rishabh.lalla/CV8501_Ag2/cv
 
 - All hyper‑params are CLI‑controlled and recorded to `outdir/config.json`.
 - Seeds are set in data split + trainers; PyTorch deterministic flags are toggled.
-- Since we provide the model checkpoints, you can just run steps 1.1 , 1.2, 1.3 and 1.7
+
 
 ---
 
