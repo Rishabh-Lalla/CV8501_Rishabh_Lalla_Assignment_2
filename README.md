@@ -96,6 +96,4 @@ python vlm_finetune_llava_med.py   --model microsoft/llava-med-v1.5-mistral-7b  
 
 ---
 
-## 5) License
 
-MIT.
