@@ -93,7 +93,7 @@ python analyze_checkpoints.py   --data-root /l/users/rishabh.lalla/CV8501_Ag2/cv
 - **Class imbalance**: we compute class weights for loss and report macro metrics.  
 - **VLM prob. scoring**: for AUC/F1, we derive class probabilities by summing token log‑likelihoods of each allowed option (normalized with softmax).  
 - **LoRA fine‑tuning**: adapters on Mistral/LLaMA attention/MLP modules; optionally train `mm_projector`.  
-- **Safety**: The VQA prompts enforce **closed‑ended answers** to minimize hallucinations and we log OOV responses.
+
 
 ---
 
