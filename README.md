@@ -67,15 +67,23 @@ python train_baseline.py   --data-root data/ham10000   --splits data/ham10000/sp
 ### 1.5. Evaluate **pre‑trained LLaVA‑Med** (VQA)
 
 ```bash
-python vlm_eval_llava_med.py   --model microsoft/llava-med-v1.5-mistral-7b   --vqa-root data/vqa_pairs   --split test   --outdir outputs/vlm_pretrained   --precision bf16   # or fp16 if your GPU supports it
+python vlm_eval_llava_med.py   --backend llavamed   --model microsoft/llava-med-v1.5-mistral-7b   --vqa-root data/vqa_pairs --split test   --outdir outputs/vlm_pretrained_med --precision fp16
 ```
 
 ### 1.6. **Fine‑tune** LLaVA‑Med with LoRA
 
-> Default settings use 4‑bit loading to fit into a single 24GB GPU. Adjust in `--precision`/`--load-in-4bit`.
+
 
 ```bash
-python vlm_finetune_llava_med.py   --model microsoft/llava-med-v1.5-mistral-7b   --vqa-root data/vqa_pairs   --train-split train --val-split val   --outdir outputs/vlm_finetune_lora   --epochs 1 --batch-size 1 --grad-accum 16   --lr 2e-4 --precision bf16 --load-in-4bit
+python vlm_finetune_llava_med.py   --backend llavamed   --model microsoft/llava-med-v1.5-mistral-7b   --vqa-root data/vqa_pairs   --train-split train --val-split val   --epochs 1 --batch-size 1 --grad-accum 16   --lr 2e-4 --precision fp16   --outdir outputs/vlm_finetune_lora_med
+```
+
+### 1.7. **Fine‑tune** LLaVA‑Med with LoRA
+
+
+
+```bash
+python analyze_checkpoints.py   --data-root /l/users/rishabh.lalla/CV8501_Ag2/cv8501_skin_vqa_pytorch/data/ham10000   --splits /l/users/rishabh.lalla/CV8501_Ag2/cv8501_skin_vqa_pytorch/data/ham10000/splits   --baseline-checkpoint /l/users/rishabh.lalla/CV8501_Ag2/cv8501_skin_vqa_pytorch/outputs/baseline_resnet50/checkpoints/best.pt   --baseline-arch resnet50   --vlm-pretrained-id microsoft/llava-med-v1.5-mistral-7b   --vlm-lora-path /l/users/rishabh.lalla/CV8501_Ag2/cv8501_skin_vqa_pytorch/outputs/vlm_finetune_lora_med_2epochs/checkpoints/adapter_model   --outdir analyses/skin_vqa   --batch-size 32 --num-workers 4 --device cuda   --eval-splits train,val,test   --vlm-precision fp16   --verbose 2   --baseline-strict
 ```
 
 
