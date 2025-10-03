@@ -1,0 +1,28 @@
+# Core
+torch>=2.2.0
+torchvision>=0.17.0
+torchaudio>=2.2.0
+
+# Data & metrics
+numpy>=1.23.0
+pandas>=2.0.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+tqdm>=4.66.0
+Pillow>=10.0.0
+
+# Logging
+tensorboard>=2.15.0
+
+# VLM / HF (for LLaVA-Med)
+transformers>=4.45.0
+accelerate>=0.34.0
+bitsandbytes>=0.43.0
+peft>=0.11.1
+sentencepiece>=0.1.99
+xformers; platform_system != "Windows"
+# Some CUDA builds need triton; installations vary by platform.
+# triton
+
+# Optional: timm if you want more backbones
+timm>=1.0.7

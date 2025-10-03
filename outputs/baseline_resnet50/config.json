@@ -1,0 +1,16 @@
+{
+  "data_root": "data/ham10000",
+  "splits": null,
+  "arch": "resnet50",
+  "image_size": 224,
+  "epochs": 25,
+  "batch_size": 32,
+  "workers": 4,
+  "lr": 0.0005,
+  "wd": 0.0001,
+  "drop": 0.2,
+  "no_pretrained": false,
+  "precision": "fp16",
+  "seed": 42,
+  "outdir": "outputs/baseline_resnet50"
+}

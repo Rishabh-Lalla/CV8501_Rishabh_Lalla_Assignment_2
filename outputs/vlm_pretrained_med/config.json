@@ -1,0 +1,9 @@
+{
+  "model": "microsoft/llava-med-v1.5-mistral-7b",
+  "vqa_root": "data/vqa_pairs",
+  "split": "test",
+  "outdir": "outputs/vlm_pretrained_med",
+  "precision": "fp16",
+  "backend": "llavamed",
+  "seed": 42
+}
