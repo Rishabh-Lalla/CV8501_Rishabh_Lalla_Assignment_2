@@ -16,10 +16,15 @@ A complete, reproducible PyTorch codebase that fulfills the **CV8501 Assignment 
 
 ```bash
 # Python 3.10+ recommended
-python -m venv .venv
-source .venv/bin/activate     # (Windows: .venv\Scripts\activate)
+conda create -n llavamed310 python=3.10 -y
+conda activate llavamed310
 pip install --upgrade pip
-pip install -r requirements.txt
+pip install -e git+https://github.com/microsoft/LLaVA-Med.git
+
+
+cd cv8501_skin_vqa_pytorch
+export PYTHONPATH="$PWD/src:$PYTHONPATH"
+
 ```
 
 > If you plan to fine‑tune LLaVA‑Med on a single GPU with limited memory, prefer the 4‑bit path and keep batch sizes small.
@@ -73,63 +78,8 @@ python vlm_eval_llava_med.py   --model microsoft/llava-med-v1.5-mistral-7b   --v
 python vlm_finetune_llava_med.py   --model microsoft/llava-med-v1.5-mistral-7b   --vqa-root data/vqa_pairs   --train-split train --val-split val   --outdir outputs/vlm_finetune_lora   --epochs 1 --batch-size 1 --grad-accum 16   --lr 2e-4 --precision bf16 --load-in-4bit
 ```
 
-### 1.7. Compare results
 
-All runs write:
-```
-outdir/
-  ├── metrics.json         # summary (acc, macro_f1, macro_auc, per-class metrics)
-  ├── metrics.csv          # per-epoch (or per-run for VLM) log
-  ├── confusion_matrix.png
-  ├── roc_curves.png
-  ├── pr_curves.png
-  ├── tensorboard/         # TensorBoard event files
-  └── checkpoints/
-      └── best.pt / adapter_model/ ...
-```
-
-Launch TensorBoard:
-```bash
-tensorboard --logdir outputs
-```
-
----
-
-## 2) Repo map
-
-```
-cv8501_skin_vqa_pytorch/
-├── README.md
-├── requirements.txt
-├── scripts/
-│   ├── download_ham10000.sh
-│   └── example_commands.sh
-├── train_baseline.py
-├── vlm_eval_llava_med.py
-├── vlm_finetune_llava_med.py
-└── src/skin_vqa/
-    ├── __init__.py
-    ├── constants.py
-    ├── datasets/
-    │   ├── ham10000.py
-    │   └── vqa_dataset.py
-    ├── data_prep/
-    │   ├── make_splits.py
-    │   └── make_vqa_pairs.py
-    ├── models/
-    │   └── baseline.py
-    ├── utils/
-    │   ├── metrics.py
-    │   ├── logging_utils.py
-    │   └── plots.py
-    └── vlm/
-        ├── scoring.py
-        └── prompts.py
-```
-
----
-
-## 3) Notes & choices
+## 2) Notes & choices
 
 - **Fair splits**: group‑aware by `lesion_id` to reduce leakage.  
 - **Class imbalance**: we compute class weights for loss and report macro metrics.  
@@ -139,7 +89,7 @@ cv8501_skin_vqa_pytorch/
 
 ---
 
-## 4) Reproducibility
+## 3) Reproducibility
 
 - All hyper‑params are CLI‑controlled and recorded to `outdir/config.json`.
 - Seeds are set in data split + trainers; PyTorch deterministic flags are toggled.
